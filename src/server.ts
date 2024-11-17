@@ -1,8 +1,10 @@
 import express, { type Express } from "express";
 import helmet from "helmet";
-import { pino } from "pino";
+import { errorHandler } from "@/middlewares/error-handler";
 
-const logger = pino({ name: "server start" });
+// import routes
+import routes from "@/routes";
+
 const app: Express = express();
 
 // Set the application to trust the reverse proxy
@@ -17,4 +19,10 @@ app.get("/", (req, res) => {
   res.send("hello there");
 });
 
-export { app, logger };
+// Routes
+app.use("/api", routes);
+
+// Error handler
+app.use(errorHandler);
+
+export { app };
