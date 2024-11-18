@@ -10,7 +10,7 @@ export interface IUser extends Document {
   updatedAt: Date;
 }
 
-const BookReferenceSchema = new Schema<IUser>(
+const UserSchema = new Schema<IUser>(
   {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
@@ -20,7 +20,4 @@ const BookReferenceSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-export const BookReference = mongoose.model<IUser>(
-  "BookReference",
-  BookReferenceSchema
-);
+export const User = mongoose.model<IUser>("User", UserSchema);

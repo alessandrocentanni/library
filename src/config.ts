@@ -16,4 +16,5 @@ export const env = cleanEnv(process.env, {
     devDefault: "debug",
     choices: ["info", "debug", "error", "fatal", "warn", "trace"],
   }),
+  JWT_SECRET: str({ devDefault: "dont-snitch-my-jwt" }),
 });

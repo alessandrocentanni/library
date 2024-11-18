@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import logger from "@/logger";
 import Papaparse from "papaparse";
-import { BookReference } from "@/models/BookReference";
+import { Book } from "@/models/Book";
 
 const log = logger.child({ module: "load-books-sample" });
 
@@ -32,8 +32,8 @@ const loadBooksSample = async () => {
     throw new Error("Error parsing books sample");
   }
 
-  await BookReference.insertMany(books.data);
-  await BookReference.updateMany({}, { $set: { availableCopies: 4 } });
+  await Book.insertMany(books.data);
+  await Book.updateMany({}, { $set: { availableCopies: 4 } });
 
   log.info("Books sample loaded");
 };

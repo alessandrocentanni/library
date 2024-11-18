@@ -4,17 +4,17 @@ import logger from "@/logger";
 const log = logger.child({ module: "error-handler" });
 
 export function errorHandler(
-  err: Error,
+  err: any,
   req: Request,
   res: Response,
   next: NextFunction
 ) {
+  console.log(err);
   if (err) {
-    if (err.name === "ValidationError") {
-      res.status(400).send(err.message);
-    } else {
-      res.status(500).send("Something went wrong");
-    }
+    const status = err.status || 500;
+    const message = err.message || "Something went wrong";
+    const data = err.data || {};
+    res.status(status).json({ message, data });
     log.error(err.message);
   }
 }
