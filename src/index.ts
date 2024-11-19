@@ -1,7 +1,7 @@
 import { env } from "@/config";
-import { app } from "@/server";
-import logger from "@/logger";
 import database from "@/database";
+import logger from "@/logger";
+import { app } from "@/server";
 
 (async () => {
   try {
@@ -10,9 +10,7 @@ import database from "@/database";
 
     const server = app.listen(env.PORT, () => {
       const { NODE_ENV, HOST, PORT } = env;
-      logger.info(
-        `Server (${NODE_ENV}) running on port http://${HOST}:${PORT}`
-      );
+      logger.info(`Server (${NODE_ENV}) running on port http://${HOST}:${PORT}`);
     });
 
     const onCloseSignal = () => {

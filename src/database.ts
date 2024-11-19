@@ -1,21 +1,18 @@
-import mongoose from "mongoose";
 import { env } from "@/config";
-import { MongoMemoryServer } from "mongodb-memory-server";
 import logger from "@/logger";
-import loadBooksSample from "./seed/load_books_sample";
-import loadUsersSample from "./seed/load_users_sample";
-// import loadData from "./tests/mongo-data/load-data";
+import { MongoMemoryReplSet } from "mongodb-memory-server";
+import mongoose from "mongoose";
 const log = logger.child({ module: "database" });
 
 const connect = async () => {
   if (env.TEST) {
-    const mongod = await MongoMemoryServer.create();
+    const mongod = await MongoMemoryReplSet.create({
+      replSet: { count: 1, storageEngine: "wiredTiger" },
+    });
     const uri = mongod.getUri();
     log.info("Launched mongodb memory database");
     const connection = await mongoose.connect(uri);
-    log.info("Connetced to mongodb memory database");
-    await loadBooksSample();
-    await loadUsersSample();
+    log.info("Connetcted to mongodb memory database");
     return connection;
   }
   const connection = await mongoose.connect(env.DATABASE_URL);

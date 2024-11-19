@@ -30,4 +30,6 @@ const loadUsersSample = async () => {
   log.info("Users sample loaded");
 };
 
-export default loadUsersSample;
+loadUsersSample()
+  .then(() => console.log("loaded users sample"))
+  .catch(() => console.error("error loading users sample"));

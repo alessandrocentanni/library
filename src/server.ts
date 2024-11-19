@@ -1,6 +1,6 @@
+import { errorHandler } from "@/middlewares/error-handler";
 import express, { type Express } from "express";
 import helmet from "helmet";
-import { errorHandler } from "@/middlewares/error-handler";
 
 // import routes
 import routes from "@/routes";

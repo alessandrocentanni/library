@@ -62,3 +62,12 @@ export class ForbiddenError extends CustomError {
     this.status = 403;
   }
 }
+
+export class PaymentRequiredError extends CustomError {
+  status: number;
+
+  constructor(message: string) {
+    super(message);
+    this.status = 402;
+  }
+}

@@ -1,17 +1,35 @@
-import { type IUser, User } from "@/models/User";
-import { faker } from "@faker-js/faker";
+import { User } from "@/models/User";
+import { WalletHistory } from "@/models/WalletHistory";
 import { hashPassword } from "@/utils/authentication";
 
-export async function createDummyUser(user?: Partial<IUser>) {
-  const data = {
-    email: faker.internet.email(),
-    password: faker.internet.password(),
-    firstName: faker.person.firstName(),
-    lastName: faker.person.lastName(),
-    ...user,
-  };
+const loadUsersSample = async () => {
+  const users = [
+    {
+      email: "user@gmail.com",
+      password: await hashPassword("password"),
+      firstName: "John",
+      lastName: "Doe",
+    },
+    {
+      email: "admin@gmail.com",
+      password: await hashPassword("password"),
+      firstName: "Jane",
+      lastName: "Doe",
+      permissions: ["book:write"],
+    },
+  ];
 
-  data.password = await hashPassword(data.password);
-  const newUser = await User.create(data);
-  return newUser.toObject();
-}
+  const createdUsers = await User.insertMany(users);
+  for (const createdUser of createdUsers) {
+    const walletHistory = {
+      user: createdUser._id,
+      amount: 1000,
+      metadata: {
+        transactionKind: "deposit",
+      },
+    };
+    await WalletHistory.create(walletHistory);
+  }
+};
+
+export default loadUsersSample;

@@ -24,7 +24,7 @@ const bookSchema = new Schema<IBook>(
     publisher: { type: String, required: true },
     availableCopies: { type: Number, default: 0 },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 bookSchema.index({ title: "text" });

@@ -1,18 +1,15 @@
 import fs from "node:fs";
 import path from "node:path";
 import logger from "@/logger";
-import Papaparse from "papaparse";
 import { Book } from "@/models/Book";
+import Papaparse from "papaparse";
 
 const log = logger.child({ module: "load-books-sample" });
 
 const loadBooksSample = async () => {
   log.info("Loading books sample");
 
-  const fileData = fs.readFileSync(
-    path.resolve(__dirname, "./books_sample.csv"),
-    "utf-8"
-  );
+  const fileData = fs.readFileSync(path.resolve(__dirname, "./books_sample.csv"), "utf-8");
 
   log.info("Parsing books sample");
   const books = Papaparse.parse(fileData, {
@@ -38,4 +35,6 @@ const loadBooksSample = async () => {
   log.info("Books sample loaded");
 };
 
-export default loadBooksSample;
+loadBooksSample()
+  .then(() => console.log("loaded books sample"))
+  .catch(() => console.error("error loading books sample"));

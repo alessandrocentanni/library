@@ -6,6 +6,7 @@ export default defineConfig({
     coverage: {
       exclude: ["**/node_modules/**", "**/index.ts"],
     },
+    hookTimeout: 60000, // we're using mongodb in-memory server for integration tests, and with the replication set, it takes a while to start. can be improved
     globals: true,
     restoreMocks: true,
   },

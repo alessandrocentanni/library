@@ -1,13 +1,9 @@
 import { User } from "@/models/User";
+import { hashPassword, verifyEmail, verifyPasswordHash } from "@/utils/authentication";
+import { controllerFactory } from "@/utils/controller-factory";
 import { generateJWT } from "@/utils/jwt";
-import {
-  hashPassword,
-  verifyEmail,
-  verifyPasswordHash,
-} from "@/utils/authentication";
 import { validateSchema } from "@/utils/validate-schema";
 import { z } from "zod";
-import { controllerFactory } from "@/utils/controller-factory";
 
 export const login = controllerFactory(async (req, res) => {
   const schema = z.object({

@@ -19,7 +19,7 @@ const UserSchema = new Schema<IUser>(
     password: { type: String, required: true, select: false },
     permissions: { type: [String], default: [] },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const User = mongoose.model<IUser>("User", UserSchema);

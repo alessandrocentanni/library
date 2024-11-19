@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { bool, cleanEnv, host, port, str, testOnly } from "envalid";
+import { bool, cleanEnv, host, num, port, str, testOnly } from "envalid";
 
 dotenv.config();
 
@@ -11,6 +11,7 @@ export const env = cleanEnv(process.env, {
   HOST: host({ devDefault: "localhost" }),
   PORT: port({ devDefault: 3000 }),
   TEST: bool({ devDefault: false }),
+  BORROW_DURATION: num({ devDefault: 7 }),
   DATABASE_URL: str({ devDefault: "mongodb://localhost:27017/test" }),
   PINO_LOG_LEVEL: str({
     devDefault: "debug",

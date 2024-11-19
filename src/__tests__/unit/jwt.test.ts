@@ -1,10 +1,10 @@
-import { describe, it, expect } from "vitest";
+import { env } from "@/config";
 import { generateJWT, veriftyJWT } from "@/utils/jwt";
 import jwt from "jsonwebtoken";
-import { env } from "@/config";
+import { describe, expect, it } from "vitest";
 
 describe("JWT Utility Functions", () => {
-  const payload = { id: "123", role: "user" };
+  const payload = { id: "123", permissions: [] };
   const secret = env.JWT_SECRET as string;
 
   it("should generate a JWT token", () => {

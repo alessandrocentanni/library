@@ -1,4 +1,4 @@
-import { verifyPasswordHash, hashPassword } from "@/utils/authentication";
+import { hashPassword, verifyPasswordHash } from "@/utils/authentication";
 import { UnauthorizedError } from "@/utils/custom-errors";
 
 describe("verifyPasswordHash", () => {
@@ -12,8 +12,6 @@ describe("verifyPasswordHash", () => {
   it("should throw UnauthorizedError for an invalid password hash", async () => {
     const password = "password123";
     const hash = "$2b$10$invalidhash";
-    expect(verifyPasswordHash(password, hash)).rejects.toThrow(
-      UnauthorizedError
-    );
+    expect(verifyPasswordHash(password, hash)).rejects.toThrow(UnauthorizedError);
   });
 });

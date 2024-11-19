@@ -1,7 +1,7 @@
-import type { Request, Response, NextFunction } from "express";
+import { env } from "@/config";
+import type { NextFunction, Request, Response } from "express";
 import { RateLimiterMemory } from "rate-limiter-flexible";
 import { TooManyRequestsError } from "../utils/custom-errors";
-import { env } from "@/config";
 
 // this is oversimplified compared to what you'd need to do in a real app
 // first of all, memory storage is not suitable for a production app - you'd need to use a database (redis pref)
@@ -19,11 +19,7 @@ const genericLimiter = new RateLimiterMemory({
   duration: 60,
 });
 
-export const authLimiterMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const authLimiterMiddleware = (req: Request, res: Response, next: NextFunction) => {
   if (env.TEST) return next();
 
   authLimiter
@@ -32,11 +28,7 @@ export const authLimiterMiddleware = (
     .catch((_) => next(new TooManyRequestsError("Too many requests")));
 };
 
-export const genericLimiterMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const genericLimiterMiddleware = (req: Request, res: Response, next: NextFunction) => {
   if (env.TEST) return next();
 
   genericLimiter

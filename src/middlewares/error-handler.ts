@@ -1,14 +1,9 @@
-import type { Request, Response, NextFunction } from "express";
 import logger from "@/logger";
+import type { NextFunction, Request, Response } from "express";
 
 const log = logger.child({ module: "error-handler" });
 
-export function errorHandler(
-  err: any,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
   if (err) {
     log.error("error thrown: ", err.name);
     const status = err.status || 500;

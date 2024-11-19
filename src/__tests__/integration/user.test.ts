@@ -1,19 +1,17 @@
-import request from "supertest";
-import { app } from "@/server";
-import { describe, it, expect, beforeAll } from "vitest";
-import { User, type IUser } from "@/models/User";
-import { createDummyUser } from "../dummies/user";
 import db from "@/database";
+import { type IUser, User } from "@/models/User";
+import { app } from "@/server";
 import { generateJWT } from "@/utils/jwt";
+import request from "supertest";
+import userDummies from "../dummies/user";
 
 describe("GET /users/:id", () => {
-  const password = "password";
-
   let token: string;
   let dummyUser: IUser;
 
   beforeAll(async () => {
     await db.connect();
+    await userDummies();
 
     const user = await User.findOne({ email: "admin@gmail.com" });
     expect(user).not.toBeNull();
@@ -28,9 +26,7 @@ describe("GET /users/:id", () => {
 
   it("should return user data for a valid user ID", async () => {
     const userId = dummyUser._id;
-    const response = await request(app)
-      .get(`/api/users/${userId}`)
-      .set("x-access-token", `${token}`);
+    const response = await request(app).get(`/api/users/${userId}`).set("x-access-token", `${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("_id", userId.toString());
@@ -46,9 +42,7 @@ describe("GET /users/:id", () => {
 
   it("should return 403 for a wrong user ID", async () => {
     const userId = "nonExistentUserId";
-    const response = await request(app)
-      .get(`/api/users/${userId}`)
-      .set("x-access-token", `${token}`);
+    const response = await request(app).get(`/api/users/${userId}`).set("x-access-token", `${token}`);
 
     expect(response.status).toBe(403);
   });
