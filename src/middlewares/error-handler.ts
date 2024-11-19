@@ -13,7 +13,7 @@ export function errorHandler(
   if (err) {
     const status = err.status || 500;
     const message = err.message || "Something went wrong";
-    const data = err.data || {};
+    const data = err.data || err.issues || {};
     res.status(status).json({ message, data });
     log.error(err.message);
   }
