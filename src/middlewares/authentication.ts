@@ -13,6 +13,7 @@ const authenticationMiddleware = (
   try {
     const decoded = veriftyJWT(token);
     req.user = decoded.id;
+    req.permissions = decoded.permissions;
     next();
   } catch (err) {
     next(new UnauthorizedError("Invalid token"));

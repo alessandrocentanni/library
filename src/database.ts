@@ -3,6 +3,7 @@ import { env } from "@/config";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import logger from "@/logger";
 import loadBooksSample from "./seed/load_books_sample";
+import loadUsersSample from "./seed/load_users_sample";
 // import loadData from "./tests/mongo-data/load-data";
 const log = logger.child({ module: "database" });
 
@@ -14,6 +15,7 @@ const connect = async () => {
     const connection = await mongoose.connect(uri);
     log.info("Connetced to mongodb memory database");
     await loadBooksSample();
+    await loadUsersSample();
     return connection;
   }
   const connection = await mongoose.connect(env.DATABASE_URL);

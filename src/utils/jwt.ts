@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 
 declare interface JwtPayload {
   id: string;
-  role: string;
+  permissions: string[];
 }
 
 export const generateJWT = (payload: JwtPayload) => {

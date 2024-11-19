@@ -20,7 +20,10 @@ export const login = controllerFactory(async (req, res) => {
   const user = await verifyEmail(data.email);
   await verifyPasswordHash(data.password, user.password);
 
-  const accessToken = generateJWT({ id: user._id.toString(), role: "user" });
+  const accessToken = generateJWT({
+    id: user._id.toString(),
+    permissions: user.permissions,
+  });
   res.json({ accessToken });
 });
 
@@ -36,5 +39,5 @@ export const signup = controllerFactory(async (req, res) => {
 
   await User.create({ ...data, password: await hashPassword(data.password) });
 
-  res.sendStatus(200);
+  res.sendStatus(201);
 });

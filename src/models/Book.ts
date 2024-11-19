@@ -4,8 +4,8 @@ export interface IBook extends Document {
   _id: Types.ObjectId;
   title: string;
   author: string;
-  publicationYear?: string;
-  publisher?: string;
+  publicationYear: string;
+  publisher: string;
   retailPrice: number;
   availableCopies: number;
   createdAt: Date;

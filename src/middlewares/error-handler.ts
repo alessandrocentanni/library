@@ -9,8 +9,8 @@ export function errorHandler(
   res: Response,
   next: NextFunction
 ) {
-  console.log(err);
   if (err) {
+    log.error("error thrown: ", err.name);
     const status = err.status || 500;
     const message = err.message || "Something went wrong";
     const data = err.data || err.issues || {};

@@ -1,26 +1,29 @@
 import request from "supertest";
 import { app } from "@/server";
 import { describe, it, expect, beforeAll } from "vitest";
-import type { IUser } from "@/models/User";
+import { User, type IUser } from "@/models/User";
 import { createDummyUser } from "../dummies/user";
 import db from "@/database";
+import { generateJWT } from "@/utils/jwt";
 
 describe("GET /users/:id", () => {
+  const password = "password";
+
   let token: string;
   let dummyUser: IUser;
-  let password: string;
 
   beforeAll(async () => {
     await db.connect();
 
-    password = "testpassword";
-    // Create a dummy user
-    dummyUser = await createDummyUser({ password });
-    // Assuming you have a way to get a valid token for authentication
-    const response = await request(app)
-      .post("/api/authentication/login")
-      .send({ email: dummyUser.email, password });
-    token = response.body.accessToken;
+    const user = await User.findOne({ email: "admin@gmail.com" });
+    expect(user).not.toBeNull();
+
+    dummyUser = user!.toObject();
+
+    token = generateJWT({
+      id: user!._id.toString(),
+      permissions: user!.permissions,
+    });
   });
 
   it("should return user data for a valid user ID", async () => {

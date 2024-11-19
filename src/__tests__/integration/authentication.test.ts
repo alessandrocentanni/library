@@ -19,7 +19,7 @@ describe("Serve API Endpoints for the authentication controller", () => {
           firstName: faker.person.firstName(),
           lastName: faker.person.lastName(),
         });
-      expect(response.statusCode).toEqual(200);
+      expect(response.statusCode).toEqual(201);
     });
 
     it("should fail to create a new user", async () => {
@@ -37,24 +37,11 @@ describe("Serve API Endpoints for the authentication controller", () => {
 
   describe("POST /api/authentication/login", () => {
     it("should login a user", async () => {
-      // create dummy first
-      const dummyUser = {
-        email: faker.internet.email(),
-        password: faker.internet.password(),
-      };
-
-      await request(app).post("/api/authentication/signup").send({
-        email: dummyUser.email,
-        password: dummyUser.password,
-        firstName: faker.person.firstName(),
-        lastName: faker.person.lastName(),
-      });
-
       const loginResponse = await request(app)
         .post("/api/authentication/login")
         .send({
-          email: dummyUser.email,
-          password: dummyUser.password,
+          email: "user@gmail.com",
+          password: "password",
         });
 
       expect(loginResponse.statusCode).toEqual(200);
@@ -63,22 +50,11 @@ describe("Serve API Endpoints for the authentication controller", () => {
 
     it("should fail to login a user", async () => {
       // create dummy first
-      const dummyUser = {
-        email: faker.internet.email(),
-        password: faker.internet.password(),
-      };
-
-      await request(app).post("/api/authentication/signup").send({
-        email: dummyUser.email,
-        password: dummyUser.password,
-        firstName: faker.person.firstName(),
-        lastName: faker.person.lastName(),
-      });
 
       const loginResponse = await request(app)
         .post("/api/authentication/login")
         .send({
-          email: dummyUser.email,
+          email: "user@gmail.com",
           password: "wrong-password",
         });
 
