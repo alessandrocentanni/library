@@ -1,5 +1,6 @@
 import { User } from "@/models/User";
-import { hashPassword, verifyEmail, verifyPasswordHash } from "@/utils/authentication";
+import { WalletHistory } from "@/models/WalletHistory";
+import { hashPassword, verifyEmail, verifyPasswordHash } from "@/services/authentication";
 import { controllerFactory } from "@/utils/controller-factory";
 import { generateJWT } from "@/utils/jwt";
 import { validateSchema } from "@/utils/validate-schema";
@@ -20,7 +21,7 @@ export const login = controllerFactory(async (req, res) => {
     id: user._id.toString(),
     permissions: user.permissions,
   });
-  res.json({ accessToken });
+  res.json({ accessToken, userId: user._id.toString() });
 });
 
 export const signup = controllerFactory(async (req, res) => {
@@ -33,7 +34,20 @@ export const signup = controllerFactory(async (req, res) => {
 
   const data = validateSchema(schema, req.body);
 
-  await User.create({ ...data, password: await hashPassword(data.password) });
+  const user = await User.create({ ...data, password: await hashPassword(data.password) });
+
+  await giveWelcomeBonus(user._id.toString());
 
   res.sendStatus(201);
 });
+
+async function giveWelcomeBonus(userId: string) {
+  const walletHistory = {
+    user: userId,
+    amount: 100,
+    metadata: {
+      transactionKind: "deposit",
+    },
+  };
+  await WalletHistory.create(walletHistory);
+}

@@ -9,6 +9,10 @@ export interface IBorrowHistory extends Document {
   status: "borrowed" | "returned" | "purchased";
   dueDate: Date;
   borrowEndDate?: Date;
+  notifications?: {
+    kind: "late-return" | "upcoming-due-date";
+    sentAt: Date;
+  }[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -25,6 +29,15 @@ const borrowHistorySchema = new Schema<IBorrowHistory>(
     },
     dueDate: { type: Date, required: true },
     borrowEndDate: { type: Date },
+    notifications: {
+      type: [
+        {
+          kind: { type: String, required: true },
+          sentAt: { type: Date, required: true },
+        },
+      ],
+      default: [],
+    },
   },
   { timestamps: true },
 );

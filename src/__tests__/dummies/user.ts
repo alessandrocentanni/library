@@ -1,6 +1,6 @@
 import { User } from "@/models/User";
 import { WalletHistory } from "@/models/WalletHistory";
-import { hashPassword } from "@/utils/authentication";
+import { hashPassword } from "@/services/authentication";
 
 const loadUsersSample = async () => {
   const users = [

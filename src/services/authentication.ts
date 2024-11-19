@@ -1,6 +1,6 @@
 import { User } from "@/models/User";
 import argon2 from "argon2";
-import { UnauthorizedError } from "./custom-errors";
+import { UnauthorizedError } from "@/utils/custom-errors";
 
 export async function hashPassword(password: string) {
   return await argon2.hash(password);

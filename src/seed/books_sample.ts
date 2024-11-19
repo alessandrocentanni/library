@@ -3,10 +3,13 @@ import path from "node:path";
 import logger from "@/logger";
 import { Book } from "@/models/Book";
 import Papaparse from "papaparse";
+import db from "@/database";
 
 const log = logger.child({ module: "load-books-sample" });
 
 const loadBooksSample = async () => {
+  await db.connect();
+
   log.info("Loading books sample");
 
   const fileData = fs.readFileSync(path.resolve(__dirname, "./books_sample.csv"), "utf-8");
@@ -36,5 +39,11 @@ const loadBooksSample = async () => {
 };
 
 loadBooksSample()
-  .then(() => console.log("loaded books sample"))
-  .catch(() => console.error("error loading books sample"));
+  .then(() => {
+    console.log("loaded books sample");
+    process.exit(0);
+  })
+  .catch(() => {
+    console.error("error loading books sample");
+    process.exit(1);
+  });

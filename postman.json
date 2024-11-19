@@ -1,0 +1,230 @@
+{
+  "info": {
+    "name": "Backend Service API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/authentication/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "authentication", "signup"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\t\t\t\t\t\t\t\"email\": \"user@example.com\",\n\t\t\t\t\t\t\t\t\"password\": \"password\",\n\t\t\t\t\t\t\t\t\"firstName\": \"John\",\n\t\t\t\t\t\t\t\t\"lastName\": \"Doe\"\n\t\t\t\t\t\t\t}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/authentication/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "authentication", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\t\t\t\t\t\t\t\"email\": \"user@example.com\",\n\t\t\t\t\t\t\t\t\"password\": \"password\"\n\t\t\t\t\t\t\t}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Get User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", ":id"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Books",
+      "item": [
+        {
+          "name": "List Books",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "books"]
+            }
+          }
+        },
+        {
+          "name": "Get Book",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/books/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "books", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Create Book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-access-token",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "books"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\t\t\t\t\t\t\t\"title\": \"New Book\",\n\t\t\t\t\t\t\t\t\"author\": \"Author Name\",\n\t\t\t\t\t\t\t\t\"publicationYear\": \"2023\",\n\t\t\t\t\t\t\t\t\"publisher\": \"Publisher Name\",\n\t\t\t\t\t\t\t\t\"retailPrice\": 19.99,\n\t\t\t\t\t\t\t\t\"availableCopies\": 10\n\t\t\t\t\t\t\t}"
+            }
+          }
+        },
+        {
+          "name": "Delete Book",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/books/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "books", ":id"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Borrowing History",
+      "item": [
+        {
+          "name": "List Borrow Histories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/borrow-histories",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "borrow-histories"]
+            }
+          }
+        },
+        {
+          "name": "Create Borrow History",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-access-token",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/borrow-histories",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "borrow-histories"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\t\t\t\t\t\t\t\"bookId\": \"bookId\"\n\t\t\t\t\t\t\t}"
+            }
+          }
+        },
+        {
+          "name": "Update Borrow History",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-access-token",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/borrow-histories/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "borrow-histories", ":id"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\t\t\t\t\t\t\t\"status\": \"returned\"\n\t\t\t\t\t\t\t}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

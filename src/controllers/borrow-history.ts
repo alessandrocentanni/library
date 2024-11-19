@@ -5,7 +5,7 @@ import type { IWalletHistoryMetadata } from "@/models/WalletHistory";
 import { controllerFactory } from "@/utils/controller-factory";
 import { ForbiddenError, NotFoundError, PaymentRequiredError } from "@/utils/custom-errors";
 import { validateSchema } from "@/utils/validate-schema";
-import { processPayment } from "@/utils/wallet-history";
+import { processPayment } from "@/services/payments";
 import type { Request, Response } from "express";
 import mongoose, { type Types, type ClientSession } from "mongoose";
 import { z } from "zod";

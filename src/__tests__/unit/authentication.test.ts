@@ -1,4 +1,4 @@
-import { hashPassword, verifyPasswordHash } from "@/utils/authentication";
+import { hashPassword, verifyPasswordHash } from "@/services/authentication";
 import { UnauthorizedError } from "@/utils/custom-errors";
 
 describe("verifyPasswordHash", () => {

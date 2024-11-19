@@ -1,10 +1,13 @@
 import logger from "@/logger";
 import { User } from "@/models/User";
-import { hashPassword } from "@/utils/authentication";
+import { hashPassword } from "@/services/authentication";
+import db from "@/database";
+import { WalletHistory } from "@/models/WalletHistory";
 
 const log = logger.child({ module: "load-users-sample" });
 
 const loadUsersSample = async () => {
+  await db.connect();
   log.info("Loading users sample");
 
   const users = [
@@ -25,11 +28,28 @@ const loadUsersSample = async () => {
 
   log.info("Inserting users sample");
 
-  await User.insertMany(users);
+  const createdUsers = await User.insertMany(users);
+
+  for (const createdUser of createdUsers) {
+    const walletHistory = {
+      user: createdUser._id,
+      amount: 1000,
+      metadata: {
+        transactionKind: "deposit",
+      },
+    };
+    await WalletHistory.create(walletHistory);
+  }
 
   log.info("Users sample loaded");
 };
 
 loadUsersSample()
-  .then(() => console.log("loaded users sample"))
-  .catch(() => console.error("error loading users sample"));
+  .then(() => {
+    console.log("loaded user sample");
+    process.exit(0);
+  })
+  .catch(() => {
+    console.error("error loading user sample");
+    process.exit(1);
+  });
