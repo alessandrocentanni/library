@@ -5,6 +5,6 @@ import user from "@/routes/user";
 const router = Router();
 
 router.use("/authentication", authentication);
-router.use("/user", user);
+router.use("/users", user);
 
 export default router;

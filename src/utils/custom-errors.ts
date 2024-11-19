@@ -53,3 +53,12 @@ export class TooManyRequestsError extends CustomError {
     this.status = 429;
   }
 }
+
+export class ForbiddenError extends CustomError {
+  status: number;
+
+  constructor(message: string) {
+    super(message);
+    this.status = 403;
+  }
+}

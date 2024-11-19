@@ -4,7 +4,7 @@ import { app } from "@/server";
 import { faker } from "@faker-js/faker";
 import db from "@/database";
 
-describe("Serve API Endpoints", () => {
+describe("Serve API Endpoints for the authentication controller", () => {
   beforeAll(async () => {
     await db.connect();
   });
@@ -58,6 +58,7 @@ describe("Serve API Endpoints", () => {
         });
 
       expect(loginResponse.statusCode).toEqual(200);
+      expect(loginResponse.body).toHaveProperty("accessToken");
     });
 
     it("should fail to login a user", async () => {

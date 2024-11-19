@@ -7,7 +7,7 @@ const authenticationMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.cookies?.token;
+  const token = req.headers["x-access-token"] as string;
   if (!token) next(new UnauthorizedError("No token provided"));
 
   try {

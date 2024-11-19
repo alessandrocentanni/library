@@ -21,14 +21,7 @@ export const login = controllerFactory(async (req, res) => {
   await verifyPasswordHash(data.password, user.password);
 
   const accessToken = generateJWT({ id: user._id.toString(), role: "user" });
-
-  res.cookie("access_token", accessToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-  });
-
-  res.sendStatus(200);
+  res.json({ accessToken });
 });
 
 export const signup = controllerFactory(async (req, res) => {
