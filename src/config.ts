@@ -12,7 +12,9 @@ export const env = cleanEnv(process.env, {
   PORT: port({ devDefault: 3000 }),
   TEST: bool({ devDefault: false }),
   BORROW_DURATION: num({ devDefault: 7 }),
-  DATABASE_URL: str({ devDefault: "mongodb://localhost:27017/test" }),
+  BORROW_COST: num({ devDefault: 3 }),
+  BORROW_OVERDUE_DAILY_FINE: num({ devDefault: 0.2 }),
+  DATABASE_URL: str({ devDefault: "mongodb://127.0.0.1:27017/?replicaSet=rs0" }),
   PINO_LOG_LEVEL: str({
     devDefault: "debug",
     choices: ["info", "debug", "error", "fatal", "warn", "trace"],

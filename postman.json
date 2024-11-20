@@ -217,10 +217,6 @@
               "raw": "{{baseUrl}}/api/borrow-histories/:id",
               "host": ["{{baseUrl}}"],
               "path": ["api", "borrow-histories", ":id"]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\t\t\t\t\t\t\t\"status\": \"returned\"\n\t\t\t\t\t\t\t}"
             }
           }
         }

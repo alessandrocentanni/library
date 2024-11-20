@@ -46,7 +46,7 @@ export const createBorrowHistory = controllerFactory(async (req: Request, res: R
     };
 
     // Process payment
-    await processPayment(req.user!, 10, paymentMetadata, session);
+    await processPayment(req.user!, env.BORROW_COST, paymentMetadata, session);
 
     await session.commitTransaction();
     await session.endSession();
@@ -54,11 +54,7 @@ export const createBorrowHistory = controllerFactory(async (req: Request, res: R
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
-
-    const isKnownError = ["ForbiddenError", "NotFoundError"].includes((error as any).name);
-
-    if (isKnownError) throw error;
-    throw new PaymentRequiredError("Failed to borrow book");
+    throw error;
   }
 });
 
@@ -136,7 +132,8 @@ export const calculateBorrowFine = async (borrowHistory: IBorrowHistory) => {
 
   const diff = borrowEndDate.getTime() - dueDate.getTime();
   if (diff > 0) {
-    const fine = Math.ceil(diff / (24 * 60 * 60 * 1000)) * 0.2; // 0.20 per day
+    const overdueDays = Math.ceil(diff / (24 * 60 * 60 * 1000));
+    const fine = overdueDays * env.BORROW_OVERDUE_DAILY_FINE; // 0.20 per day
     return Math.round(fine * 100) / 100;
   }
 
@@ -171,8 +168,8 @@ export const listBorrowHistory = controllerFactory(async (req: Request, res: Res
   const limit = query.limit || 10;
   const skip = (page - 1) * limit;
 
-  const borrowHistory = await Book.find(filter).skip(skip).limit(limit);
-  const totalBorrowHistory = await Book.countDocuments(filter);
+  const borrowHistory = await BorrowHistory.find(filter).skip(skip).limit(limit);
+  const totalBorrowHistory = await BorrowHistory.countDocuments(filter);
   const totalPages = Math.ceil(totalBorrowHistory / limit);
 
   res.status(200).json({

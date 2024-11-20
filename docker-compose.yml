@@ -12,19 +12,29 @@ services:
       TEST: false
       PORT: 3000
       HOST: localhost
-      DATABASE_URL: mongodb://mongo:27017/test
+      DATABASE_URL: mongodb://mongo:27017/?replicaSet=rs0
       BORROW_DURATION: 7
+      BORROW_OVERDUE_DAILY_FINE: 0.2
+      BORROW_COST: 3
       PINO_LOG_LEVEL: debug
       JWT_SECRET: dont-snitch-my-jwt
     depends_on:
       - mongo
 
   mongo:
-    image: mongo:latest
+    image: mongo:7
+    container_name: mongodb
     ports:
       - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
+    command: mongod --replSet rs0
+    healthcheck:
+      test: |
+        mongosh --eval "try { rs.status().ok } catch (e) { rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'mongo:27017' }] }).ok }"
+      start_period: 0s
+      interval: 500ms
+      timeout: 5s
+      retries: 5
 
 volumes:
-  mongo-data:
+  mongo1_data:
+  mongo1_config:

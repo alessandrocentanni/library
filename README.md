@@ -36,6 +36,9 @@ There are two ways to run this project
 1. Clone the repository
 2. Run `docker-compose up`
 
+If you decide to use docker-compose, keep in mind that you'll probably need to add "mongo" as a reference of 127.0.0.1 in your /etc/hosts file.
+I could not find a way to make it work without this change while using replica sets.
+
 ## Environment Variables
 
 - `NODE_ENV` - development/production/test
