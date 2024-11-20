@@ -76,7 +76,7 @@ You can use the Postman collection provided in the `postman.json` file to test t
 
 ### User Management Endpoints
 
-- **GET /api/users/:id**: Retrieve user data by user ID. You can only retrive your own user data.
+- **GET /api/users/:id**: Retrieve user data by user ID. You can only retrive your own user data. **This is the only way to return the current wallet balance**
 
 ### Book Operations Endpoints
 
@@ -119,3 +119,4 @@ I did not include real email notifications. I've just added a console log to sho
 
 - Script to add permissions to users
 - Script to add wallet balance to users
+- APIs for wallet transactions history
