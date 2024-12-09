@@ -1,6 +1,6 @@
 # Backend Service Documentation
 
-This is a Node.js/Express backend service that manages book borrowing and user accounts.
+This is a Node.js/Express backend service that manages book borrowing and user accounts. (Take-home interview exercise)
 
 ## Key Features
 
